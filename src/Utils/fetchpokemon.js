@@ -5,14 +5,17 @@ export async function fetchInitialData() {
   return results.results
 }
 export async function fetchTypeData(selectedType) {
-  const url = `https://pokedex-alchemy.herokuapp.com/api/pokedex?type=${selectedType}`
-  const res = await fetch(url)
-  const results = await res.json()
-  return results.results
+  if (selectedType === 'all') {
+    await fetchInitialData()
+  } else {
+    const url = `https://pokedex-alchemy.herokuapp.com/api/pokedex?type=${selectedType}`
+    const res = await fetch(url)
+    const results = await res.json()
+    return results.results
+  }
 }
 
 export async function fetchSearchedPokeData(searchName, selectedType) {
-  console.log(searchName, 'fetchsearched')
   if (searchName === undefined) {
     const url = `https://pokedex-alchemy.herokuapp.com/api/pokedex?type=${selectedType}`
     const res = await fetch(url)
