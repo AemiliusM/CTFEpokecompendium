@@ -16,7 +16,6 @@ export async function fetchTypeData(selectedType) {
 }
 
 export async function fetchSearchedPokeData(searchName, selectedType) {
-  console.log(searchName, 'fetchsearched')
   if (searchName === undefined) {
     const url = `https://pokedex-alchemy.herokuapp.com/api/pokedex?type=${selectedType}`
     const res = await fetch(url)
