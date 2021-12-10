@@ -14,7 +14,7 @@ export default function Compendium() {
   const [pokemons, setPokemons] = useState([])
   const [searchName, setSearchName] = useState('')
   const [types, setTypes] = useState([])
-  const [selectedType, setSelectedType] = useState('')
+  const [selectedType, setSelectedType] = useState('all')
   // const [pageSettings, setPageSettings] = useState('')
 
   // useeffctwith empty array will be the initial load with general
@@ -42,12 +42,17 @@ export default function Compendium() {
   // I want to have it on submit but my be on change.
 
   useEffect(() => {
-    if (selectedType === '') return
-    const getSelectedType = async () => {
-      setLoading(true)
-      const listOfFilteredPoke = await fetchTypeData(selectedType)
-      setPokemons(listOfFilteredPoke)
-      setLoading(false)
+    async function getSelectedType() {
+      if (selectedType !== 'all') {
+        setLoading(true)
+        const listOfFilteredPoke = await fetchTypeData(selectedType)
+        setPokemons(listOfFilteredPoke)
+        setLoading(false)
+      } else {
+        const pokeList = await fetchInitialData()
+        setPokemons(pokeList)
+        setLoading(false)
+      }
     }
     getSelectedType()
   }, [selectedType])
